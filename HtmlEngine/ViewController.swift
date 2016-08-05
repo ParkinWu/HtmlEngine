@@ -27,15 +27,46 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let path = NSBundle.mainBundle().pathForResource("index", ofType: "html")
+        
+        let timerBegin = NSDate().timeIntervalSince1970
+        let path = NSBundle.mainBundle().pathForResource("layout_test", ofType: "html")
         
         
         let source = try! NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
         
-        print(source)
         
-        print(source.length)
-        print(parser(source as String))
+        
+        let cssPath = NSBundle.mainBundle().pathForResource("layout_test", ofType: "css")
+        let cssSource = try! NSString(contentsOfFile: cssPath!, encoding: NSUTF8StringEncoding)
+        
+//        print("-----------------------------------------")
+//        print(source)
+        
+        let html = HtmlParser.parser(source as String)
+//        print(html)
+//        
+//        print(cssSource)
+        let css = CssParser.parse(cssSource as String)
+//        print(css)
+//        print("-----------------------------------------")
+        let styleTree = Style.styleTree(html, stylesheet: css)
+        
+//        print(styleTree)
+        
+//        print("-----------------------------------------\n")
+        
+        var viewport = Layout.Dimensions()
+        viewport.content.width = Float(UIScreen.mainScreen().bounds.size.width)
+        viewport.content.height = Float(UIScreen.mainScreen().bounds.size.height)
+        
+        
+        let layoutTree = Layout.layoutTree(styleTree, containerBlock: viewport)
+        let timerEnd = NSDate().timeIntervalSince1970
+        
+        print(timerEnd - timerBegin)
+        print(layoutTree)
+        
+        Printer.printLayoutBox(layoutTree, containerView: self.view)
         
     }
 

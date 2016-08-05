@@ -1,0 +1,12 @@
+head {
+    display: none;
+}
+* {
+    display: block;
+
+}
+
+div.a { background-color: #ff0000; width:auto;}
+p { background-color: #ffa500; width:auto; height: 20px; margin-bottom: 10px; margin-top: 10px;}
+
+#blue { background-color: #c12345; }
