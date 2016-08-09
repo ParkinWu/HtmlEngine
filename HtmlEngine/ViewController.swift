@@ -39,8 +39,8 @@ class ViewController: UIViewController {
         let cssPath = NSBundle.mainBundle().pathForResource("layout_test", ofType: "css")
         let cssSource = try! NSString(contentsOfFile: cssPath!, encoding: NSUTF8StringEncoding)
         
-//        print("-----------------------------------------")
-//        print(source)
+        print("-----------------------------------------")
+        print(source)
         
         let html = HtmlParser.parser(source as String)
 //        print(html)
